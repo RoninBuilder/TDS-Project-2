@@ -31,8 +31,8 @@ app = Flask(__name__)
 
 # Initialize OpenAI client
 client = OpenAI(
-    api_key=os.getenv("GROQ_API_KEY"),
-    base_url="https://api.groq.com/openai/v1",
+    api_key=os.getenv("AIPROXY_TOKEN"),
+    base_url="http://aiproxy.sanand.workers.dev/openai/v1",
 )
 
 def save_upload_file_temp(file_storage) -> Optional[str]:
@@ -450,8 +450,8 @@ def manage_github_email_json(params: Dict) -> str:
         import requests
         import base64
         # Configuration
-        owner = os.getenv("GITHUB_USERNAME")  # replace with your GitHub username
-        repo = os.getenv("GITHUB_REPO_NAME")
+        owner = os.getenv("RoninBuilder")  # replace with your GitHub username
+        repo = os.getenv("TDS-PROJECT-2")
         path = 'email.json'
         branch = 'main'
         token = os.getenv("G_TOKEN")
@@ -1171,7 +1171,7 @@ The query you will return "SELECT SUM(units * price) FROM tickets WHERE LOWER(TR
         
         # Use the LLM to generate the SQL query
         response = client.chat.completions.create(
-            model="gemma2-9b-it",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are an expert SQL developer."},
                 {"role": "user", "content": prompt}
@@ -1998,7 +1998,7 @@ def process_question(question: str, file_path: Optional[str] = None) -> str:
 
         # Otherwise, use the OpenAI model.
         response = client.chat.completions.create(
-            model="gemma2-9b-it",
+            model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are an expert in Tools in Data Science."},
                 {"role": "user", "content": question}
@@ -2120,3 +2120,4 @@ def root():
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0", port=8000)
+
